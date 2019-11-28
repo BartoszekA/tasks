@@ -18,10 +18,6 @@ public class DbService {
     }
 
     public Task findTaskById(Long id) {
-        return repository.findAll()
-                .stream()
-                .filter(t -> t.getId() == id)
-                .findFirst()
-                .orElse(null);
+        return repository.findById(id).orElse(null);
     }
 }
