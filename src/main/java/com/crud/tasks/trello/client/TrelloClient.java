@@ -45,8 +45,6 @@ public class TrelloClient {
 
         Optional<TrelloBoardDto[]> boardsResponse = Optional.of(restTemplate.getForObject(getUrl(), TrelloBoardDto[].class));
 
-        List<TrelloBoardDto> response = new ArrayList<>();
-        boardsResponse.ifPresent(br -> Arrays.stream(br).forEach(object -> response.add(object)));
-        return response;
+        return boardsResponse.map(Arrays::asList).orElseGet(ArrayList::new);
     }
 }
