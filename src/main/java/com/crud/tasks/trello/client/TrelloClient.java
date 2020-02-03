@@ -1,8 +1,8 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.domain.dto.CreatedTrelloCard;
+import com.crud.tasks.domain.dto.TrelloBoardDto;
+import com.crud.tasks.domain.dto.TrelloCardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -45,7 +45,7 @@ public class TrelloClient {
 
     public List<TrelloBoardDto> getTrelloBoards() {
 
-        Optional<TrelloBoardDto[]> boardsResponse = Optional.of(restTemplate.getForObject(getUrl(), TrelloBoardDto[].class));
+        Optional<TrelloBoardDto[]> boardsResponse = Optional.ofNullable(restTemplate.getForObject(getUrl(), TrelloBoardDto[].class));
 
         return boardsResponse.map(Arrays::asList).orElseGet(ArrayList::new);
     }
