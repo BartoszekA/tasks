@@ -1,15 +1,11 @@
 package com.crud.tasks.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class SimpleEmailMessageFactory {
-    SimpleMailMessage mailMessage = new SimpleMailMessage();
 
     public SimpleMailMessage createMailMessage(final Mail mail) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         if(mail.getToCc() != null) {
             mailMessage.setCc(mail.getToCc());
