@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.SimpleEmailMessageFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -9,7 +10,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -27,11 +27,8 @@ public class SimpleEmailServiceTest {
         //Given
         Mail mail = new Mail("test@test.com", null, "Test", "Test Message");
 
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(mail.getMailTo());
-        mailMessage.setCc(mail.getToCc());
-        mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mail.getMessage());
+        SimpleEmailMessageFactory factory = new SimpleEmailMessageFactory();
+        SimpleMailMessage mailMessage = factory.createMailMessage(mail);
 
         //When
         simpleEmailService.send(mail);
