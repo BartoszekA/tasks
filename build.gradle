@@ -30,7 +30,7 @@ dependencies {
 
 	compile('org.springframework.boot:spring-boot-starter-mail:2.2.4.RELEASE')
 
-	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
 
 test {
