@@ -25,7 +25,7 @@ public class SimpleEmailServiceTest {
     @Test
     public void shouldSendEmail() {
         //Given
-        Mail mail = new Mail("test@test.com", null, "Test", "Test Message");
+        Mail mail = new Mail("odietamoo@gmail.com", null, "Test", "Test Message");
 
         SimpleEmailMessageFactory factory = new SimpleEmailMessageFactory();
         SimpleMailMessage mailMessage = factory.createMailMessage(mail);
