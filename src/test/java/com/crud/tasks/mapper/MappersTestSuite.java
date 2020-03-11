@@ -1,7 +1,12 @@
 package com.crud.tasks.mapper;
 
 import com.crud.tasks.domain.Task;
+import com.crud.tasks.domain.TrelloBoard;
+import com.crud.tasks.domain.TrelloList;
 import com.crud.tasks.domain.dto.TaskDto;
+import com.crud.tasks.domain.dto.TrelloBoardDto;
+import com.crud.tasks.domain.dto.TrelloListDto;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -54,5 +59,45 @@ public class MappersTestSuite {
         assertEquals(1L, taskDtoList.get(0).getId());
         assertEquals("Task2", taskDtoList.get(1).getTitle());
         assertEquals("This is task #3", taskDtoList.get(2).getContent());
+    }
+
+    @Test
+    public void testMapToBoards() {
+        //Given
+        TrelloMapper trelloMapper = new TrelloMapper();
+        TrelloListDto list1 = new TrelloListDto("01ABC", "List 01ABC", false);
+        TrelloListDto list2 = new TrelloListDto("02ABC", "List 02ABC", false);
+        TrelloListDto list3 = new TrelloListDto("03ABC", "List 03ABC", true);
+        TrelloListDto list4 = new TrelloListDto("01DEF", "List 01DEF", false);
+        TrelloListDto list5 = new TrelloListDto("02DEF", "List 02DEF", false);
+        TrelloListDto list6 = new TrelloListDto("03DEF", "List 03DEF", false);
+        TrelloListDto list7 = new TrelloListDto("01GHI", "List 01GHI", true);
+        TrelloListDto list8 = new TrelloListDto("02GHI", "List 02GHI", true);
+        TrelloBoardDto board1 = new TrelloBoardDto("TB01", "Trello Board #1", new ArrayList<>());
+        TrelloBoardDto board2 = new TrelloBoardDto("TB02", "Trello Board #2", new ArrayList<>());
+        TrelloBoardDto board3 = new TrelloBoardDto("TB03", "Trello Board #3", new ArrayList<>());
+        board1.getLists().add(list1);
+        board1.getLists().add(list2);
+        board1.getLists().add(list3);
+        board2.getLists().add(list4);
+        board2.getLists().add(list5);
+        board2.getLists().add(list6);
+        board3.getLists().add(list7);
+        board3.getLists().add(list8);
+        List<TrelloBoardDto> trelloBoardDtoList = new ArrayList<>();
+        trelloBoardDtoList.add(board1);
+        trelloBoardDtoList.add(board2);
+        trelloBoardDtoList.add(board3);
+        //When
+        List<TrelloBoard> trelloBoardList = trelloMapper.mapToBoards(trelloBoardDtoList);
+        //Then
+        assertEquals(3, trelloBoardList.size());
+        assertEquals(3, trelloBoardList.get(0).getLists().size());
+        assertEquals(3, trelloBoardList.get(1).getLists().size());
+        assertEquals(2, trelloBoardList.get(2).getLists().size());
+        assertEquals(list1.getId(), trelloBoardList.get(0).getLists().get(0).getId());
+        assertEquals(list4.getId(), trelloBoardList.get(1).getLists().get(0).getId());
+        assertEquals(list7.getId(), trelloBoardList.get(2).getLists().get(0).getId());
+
     }
 }
