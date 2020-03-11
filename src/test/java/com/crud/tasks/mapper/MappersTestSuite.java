@@ -98,6 +98,43 @@ public class MappersTestSuite {
         assertEquals(list1.getId(), trelloBoardList.get(0).getLists().get(0).getId());
         assertEquals(list4.getId(), trelloBoardList.get(1).getLists().get(0).getId());
         assertEquals(list7.getId(), trelloBoardList.get(2).getLists().get(0).getId());
+    }
 
+    @Test
+    public void testMapToBoardsDto() {
+        TrelloMapper trelloMapper = new TrelloMapper();
+        TrelloList list1 = new TrelloList("01ABC", "List 01ABC", false);
+        TrelloList list2 = new TrelloList("02ABC", "List 02ABC", false);
+        TrelloList list3 = new TrelloList("03ABC", "List 03ABC", true);
+        TrelloList list4 = new TrelloList("01DEF", "List 01DEF", false);
+        TrelloList list5 = new TrelloList("02DEF", "List 02DEF", false);
+        TrelloList list6 = new TrelloList("03DEF", "List 03DEF", false);
+        TrelloList list7 = new TrelloList("01GHI", "List 01GHI", true);
+        TrelloList list8 = new TrelloList("02GHI", "List 02GHI", true);
+        TrelloBoard board1 = new TrelloBoard("TB01", "Trello Board #1", new ArrayList<>());
+        TrelloBoard board2 = new TrelloBoard("TB02", "Trello Board #2", new ArrayList<>());
+        TrelloBoard board3 = new TrelloBoard("TB03", "Trello Board #3", new ArrayList<>());
+        board1.getLists().add(list1);
+        board1.getLists().add(list2);
+        board1.getLists().add(list3);
+        board2.getLists().add(list4);
+        board2.getLists().add(list5);
+        board2.getLists().add(list6);
+        board3.getLists().add(list7);
+        board3.getLists().add(list8);
+        List<TrelloBoard> trelloBoardList = new ArrayList<>();
+        trelloBoardList.add(board1);
+        trelloBoardList.add(board2);
+        trelloBoardList.add(board3);
+        //When
+        List<TrelloBoardDto> trelloBoardDtoList = trelloMapper.mapToBoardsDto(trelloBoardList);
+        //Then
+        assertEquals(3, trelloBoardDtoList.size());
+        assertEquals(3, trelloBoardDtoList.get(0).getLists().size());
+        assertEquals(3, trelloBoardDtoList.get(1).getLists().size());
+        assertEquals(2, trelloBoardDtoList.get(2).getLists().size());
+        assertEquals(list1.getId(), trelloBoardDtoList.get(0).getLists().get(0).getId());
+        assertEquals(list4.getId(), trelloBoardDtoList.get(1).getLists().get(0).getId());
+        assertEquals(list7.getId(), trelloBoardDtoList.get(2).getLists().get(0).getId());
     }
 }
