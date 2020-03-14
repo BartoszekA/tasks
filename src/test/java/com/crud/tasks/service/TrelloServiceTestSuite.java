@@ -5,7 +5,6 @@ import com.crud.tasks.domain.dto.CreatedTrelloCardDto;
 import com.crud.tasks.domain.dto.TrelloBoardDto;
 import com.crud.tasks.domain.dto.TrelloCardDto;
 import com.crud.tasks.trello.client.TrelloClient;
-import javafx.beans.binding.When;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
