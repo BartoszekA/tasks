@@ -13,6 +13,9 @@ public class StaticWebPageController {
         model.put("variable", "My Thymeleaf variable");
         model.put("one", 1);
         model.put("two", 2);
+        model.put("multiply", "2 * 2 = ");
+        model.put("multiplyAndAdd", "2 * 2 + 2 = ");
+        model.put("multiplyAndSubstract", "2 - 2 * 2 = ");
         return "index";
     }
 }
