@@ -1,7 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
-import com.crud.tasks.controller.TaskController;
+import com.crud.tasks.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 public class MailCreatorService {
 
     @Autowired
-    private TaskController taskController;
+    private TaskRepository taskRepository;
 
     @Autowired
     private AdminConfig adminConfig;
@@ -43,8 +43,22 @@ public class MailCreatorService {
         context.setVariable("is_friend", false);
         context.setVariable("admin_config", adminConfig);
         context.setVariable("application_functionality", functionality);
-        context.setVariable("update_message", "On your account there are " + taskController.getTasks().size() +
-                " tasks. To see your tasks, please, visit the website.");
         return templateEngine.process("mail/created-trello-card-mail", context);
+    }
+
+    public String buildInformationEmail(String message) {
+
+        Context context = new Context();
+
+        context.setVariable("message", message);
+        context.setVariable("tasks_url", "https://bartoszeka.github.io/");
+        context.setVariable("button", "Visit website");
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("goodbye_message", "Thank you for using Trello.");
+        context.setVariable("company_details", adminConfig.getCompanyDetails());
+        context.setVariable("admin_config", adminConfig);
+        context.setVariable("update_message", "Number of current tasks on your account: " + taskRepository.count() +
+                ". To see your tasks, please, visit the website.");
+        return templateEngine.process("mail/daily-update-mail", context);
     }
 }
