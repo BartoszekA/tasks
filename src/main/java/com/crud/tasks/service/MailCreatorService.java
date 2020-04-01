@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
+import com.crud.tasks.controller.TaskController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ import java.util.List;
 
 @Service
 public class MailCreatorService {
+
+    @Autowired
+    private TaskController taskController;
 
     @Autowired
     private AdminConfig adminConfig;
@@ -39,6 +43,8 @@ public class MailCreatorService {
         context.setVariable("is_friend", false);
         context.setVariable("admin_config", adminConfig);
         context.setVariable("application_functionality", functionality);
+        context.setVariable("update_message", "On your account there are " + taskController.getTasks().size() +
+                " tasks. To see your tasks, please, visit the website.");
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
 }
